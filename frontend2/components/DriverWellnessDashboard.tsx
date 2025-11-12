@@ -112,7 +112,7 @@ const DriverWellnessDashboard = () => {
     initCamera();
 
     return () => {
-      if (videoRef.current?.srcObject) {
+      if (videoRef.current?.srcObject instanceof MediaStream) {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
@@ -297,11 +297,9 @@ const DriverWellnessDashboard = () => {
   }, [currentData, settings.fatigueThreshold]);
 
   const toggleCamera = () => {
-    if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => {
-        track.enabled = !track.enabled;
-      });
+    const stream = videoRef.current?.srcObject;
+    if (stream instanceof MediaStream) {
+      stream.getTracks().forEach((track) => (track.enabled = !track.enabled));
       setIsCameraActive(!isCameraActive);
     }
   };

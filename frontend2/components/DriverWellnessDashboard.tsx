@@ -296,11 +296,27 @@ const DriverWellnessDashboard = () => {
     return () => clearInterval(interval);
   }, [currentData, settings.fatigueThreshold]);
 
-  const toggleCamera = () => {
-    const stream = videoRef.current?.srcObject;
-    if (stream instanceof MediaStream) {
-      stream.getTracks().forEach((track) => (track.enabled = !track.enabled));
-      setIsCameraActive(!isCameraActive);
+  const toggleCamera = async () => {
+    if (isCameraActive) {
+      const stream = videoRef.current?.srcObject;
+      if (stream instanceof MediaStream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+      setIsCameraActive(false);
+      setIsConnected(false);
+    } else {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 1280, height: 720, facingMode: "user" },
+        });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+        setIsCameraActive(true);
+        setIsConnected(true);
+      } catch (err) {
+        console.error("Error reactivating camera:", err);
+      }
     }
   };
 

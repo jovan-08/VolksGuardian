@@ -55,8 +55,8 @@ const DriverWellnessDashboard = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
+  const videoRef = (useRef < HTMLVideoElement) | (null > null);
+  const canvasRef = (useRef < HTMLCanvasElement) | (null > null);
 
   // Settings state
   const [settings, setSettings] = useState({

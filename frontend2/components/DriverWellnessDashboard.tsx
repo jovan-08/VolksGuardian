@@ -241,7 +241,9 @@ const DriverWellnessDashboard = () => {
         ),
         hr: Math.max(
           60,
-          Math.min(100, currentData.hr + (Math.random() - 0.5) * 3)
+          Number(
+            Math.min(100, currentData.hr + (Math.random() - 0.5) * 3).toFixed(2)
+          )
         ),
         mar: Math.max(
           0.1,
@@ -694,7 +696,7 @@ const DriverWellnessDashboard = () => {
                         <span>•</span>
                         <span>FPS: {currentData.fps}</span>
                         <span>•</span>
-                        <span>MediaPipe Face Mesh: Active</span>
+                        <span>MediaPipe Face Mesh</span>
                       </div>
                     </div>
                   </div>
@@ -805,7 +807,7 @@ const DriverWellnessDashboard = () => {
                   <MetricCard
                     icon={Heart}
                     label="Heart Rate"
-                    value={currentData.hr}
+                    value={currentData.hr.toFixed(2)}
                     unit="bpm"
                     color="text-red-400"
                     subtext="Resting: 60-100"
